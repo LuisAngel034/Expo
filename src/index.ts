@@ -1,20 +1,14 @@
-// import type { Core } from '@strapi/strapi';
+// @ts-ignore
+import Aikido from '@aikidosec/firewall';
 
-export default {
-  /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
-   */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+const Zen = (Aikido as any).default || Aikido;
 
-  /**
-   * An asynchronous bootstrap function that runs before
-   * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
-   */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
-};
+if (Zen && typeof Zen.start === 'function') {
+  Zen.start({
+    token: process.env.AIKIDO_TOKEN,
+    environment: 'development'
+  });
+}
+
+import type { Core } from '@strapi/strapi';
+// ... el resto de tu código (register y bootstrap)
